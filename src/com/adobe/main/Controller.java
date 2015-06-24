@@ -80,12 +80,28 @@ public class Controller {
 			Thread.sleep(10000);
 			takeScreenshot(driver, filename.toString());
 			
+			// If page is scrollable
+			int scrollTopCounter=1;
+			JavascriptExecutor executer = (JavascriptExecutor)driver;
+			Long windowHeight =(long)executer.executeScript("return window.innerHeight");
+			Long pageHeight = (long)executer.executeScript("return document.body.scrollHeight");
+			long scrollTop =0l;
+			
+			while(windowHeight+scrollTop <= pageHeight){
+				executer.executeScript("window.scrollBy(0,500);", "");
+				scrollTop = scrollTopCounter*500;
+				scrollTopCounter++;
+				Thread.sleep(2000);
+				takeScreenshot(driver, filePath+locale+"_"+count+"_"+scrollTopCounter+"_"+year+"_"+month+"_"+day+".png");
+			}
+			
 			// 4. Add current URL to visited List
 			visitedURL.add(identifiedURL);
-			 String filewritename= "MyFile.txt";
+			
+			 /*String filewritename= "MyFile.txt";
 			  FileWriter fw = new FileWriter(filewritename,true); //the true will append the new data
 			   fw.write(identifiedURL+", ");//appends the string to the file
-			   fw.close();
+			   fw.close();*/
 			
 			
 			// 4. Identify all the anchor tags and buttons in the URL
