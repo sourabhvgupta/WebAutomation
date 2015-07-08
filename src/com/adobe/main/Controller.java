@@ -66,7 +66,7 @@ public class Controller {
 			}
 			
 			// 3. Take a screenshot of the page
-			String filePath = filepath+locale+"/";
+			String filePath = filepath;
 			StringBuilder filename = new StringBuilder(filePath);
 			filename.append(locale+"_");
 			filename.append(count);
@@ -81,27 +81,27 @@ public class Controller {
 			takeScreenshot(driver, filename.toString());
 			
 			// If page is scrollable
-			int scrollTopCounter=1;
-			JavascriptExecutor executer = (JavascriptExecutor)driver;
-			Long windowHeight =(long)executer.executeScript("return window.innerHeight");
-			Long pageHeight = (long)executer.executeScript("return document.body.scrollHeight");
-			long scrollTop =0l;
+			//int scrollTopCounter=1;
+		//	JavascriptExecutor executer = (JavascriptExecutor)driver;
+		//	Long windowHeight =(long)executer.executeScript("return window.innerHeight");
+		//	Long pageHeight = (long)executer.executeScript("return document.body.scrollHeight");
+		//	long scrollTop =0l;
 			
-			while(windowHeight+scrollTop <= pageHeight){
-				executer.executeScript("window.scrollBy(0,500);", "");
-				scrollTop = scrollTopCounter*500;
-				scrollTopCounter++;
-				Thread.sleep(2000);
-				takeScreenshot(driver, filePath+locale+"_"+count+"_"+scrollTopCounter+"_"+year+"_"+month+"_"+day+".png");
-			}
+		//	while(windowHeight+scrollTop <= pageHeight){
+		//		executer.executeScript("window.scrollBy(0,500);", "");
+		//		scrollTop = scrollTopCounter*500;
+		//		scrollTopCounter++;
+		//		Thread.sleep(2000);
+		//		takeScreenshot(driver, filePath+locale+"_"+count+"_"+scrollTopCounter+"_"+year+"_"+month+"_"+day+".png");
+		//	}
 			
 			// 4. Add current URL to visited List
 			visitedURL.add(identifiedURL);
 			
-			 /*String filewritename= "MyFile.txt";
+			 String filewritename= "MyFile.txt";
 			  FileWriter fw = new FileWriter(filewritename,true); //the true will append the new data
 			   fw.write(identifiedURL+", ");//appends the string to the file
-			   fw.close();*/
+			   fw.close();
 			
 			
 			// 4. Identify all the anchor tags and buttons in the URL
@@ -116,22 +116,26 @@ public class Controller {
 					url = BASEURL+newURL;
 				}
 				
+				//url=url+"?locale=de_DE";
+				
 				boolean condition1 = !visitedURL.contains(url);
 				boolean condition2 = !urlQueue.contains(url);
 				boolean condition3 = !url.startsWith("https://relstage.typekit.com/fonts?");
 				boolean condition4 = !url.startsWith("https://relstage.typekit.com/fonts/");
-				boolean condition5 = !url.contains("blog");
-				boolean condition6 = !url.contains("renga");
+				//boolean condition5 = !url.contains("blog");
+				//boolean condition6 = !url.contains("renga");
 				
 				boolean condition56 = url.contains("relstage");
-				boolean condition7 = !url.startsWith("https://relstage.typekit.com/lists?");
-				boolean condition8 = !url.startsWith("https://relstage.typekit.com/lists/");
-				boolean condition9 = !url.startsWith("https://relstage.typekit.com/foundries/");
-				boolean condition10 = !url.startsWith("https://relstage.typekit.com/gallery?");
+				//boolean condition7 = !url.startsWith("https://relstage.typekit.com/lists?");
+				//boolean condition8 = !url.startsWith("https://relstage.typekit.com/lists/");
+				//boolean condition9 = !url.startsWith("https://relstage.typekit.com/foundries/");
+				//boolean condition10 = !url.startsWith("https://relstage.typekit.com/gallery?");
 				boolean condition11 = !url.startsWith("https://relstage.typekit.com/docs");
 				
+				boolean condition12 = !url.startsWith("https://relstage.typekit.com/eulas");
 				
-				if(condition1 && condition2 && condition3 && condition4 && condition56 && condition7 && condition8 && condition9 && condition10 && condition11){
+				
+				if(condition1 && condition2 && condition3 && condition4 && condition56 && condition11 && condition12){
 					urlQueue.add(url);
 				}
 			}
